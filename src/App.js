@@ -212,6 +212,22 @@ export default function App() {
   const [showResults, setShowResults] = useState(false);
   const [error, setError] = useState("");
 
+  const formatDOB = (value) => {
+    // Remove all non-digit characters
+    const cleaned = value.replace(/\D/g, "");
+
+    // Only allow up to 8 digits (DDMMYYYY)
+    if (cleaned.length === 0) return "";
+    if (cleaned.length <= 2) return cleaned;
+    if (cleaned.length <= 4) return cleaned.slice(0, 2) + "-" + cleaned.slice(2);
+    return cleaned.slice(0, 2) + "-" + cleaned.slice(2, 4) + "-" + cleaned.slice(4, 8);
+  };
+
+  const handleDOBChange = (e) => {
+    const formatted = formatDOB(e.target.value);
+    setDob(formatted);
+  };
+
   const isValidDOB = (dateStr) => {
     if (!dateStr) return false;
 
@@ -304,9 +320,10 @@ export default function App() {
               <label className="block text-sm font-medium mb-1">DOB</label>
               <input
                 value={dob}
-                onChange={(e) => setDob(e.target.value)}
+                onChange={handleDOBChange}
                 className="border-2 border-blue-300 bg-blue-50 p-2 rounded focus:outline-none focus:border-blue-500"
-                placeholder="DD-MM-YYYY"
+                placeholder="DDMMYYYY"
+                maxLength="10"
               />
             </div>
             <div>
