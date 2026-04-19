@@ -5,6 +5,7 @@ function reduceToSingle(n) {
     n = n.toString().split("").reduce((a, b) => a + Number(b), 0);
   }
   return n === 0 ? 9 : n;
+  
 }
 
 function getRoot(day) {
